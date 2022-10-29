@@ -23,7 +23,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 
 HTTP POST URL -> http://localhost:8000/swagger/index.html
 
-### REALIZAR TRANSAÇÃO
+### CONSULTAR SALDO
 
-HTTP POST URL -> http://localhost:8081/swagger/index.html
+HTTP GET URL -> http://localhost:8081/swagger/index.html
 
