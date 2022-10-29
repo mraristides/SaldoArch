@@ -1,0 +1,22 @@
+# SINGLE START .NET
+docker build . -t microservico
+docker run --name microservico -p 8081:80 -d microservico
+
+# SINGLE START MONGO
+docker run -d -p 27017:27017 --name mongo mongo
+docker exec -it mongo /bin/bash
+mongosh
+use SaldoDb
+db.createCollection("Transacoes")
+
+# SINGLE START REDIS
+docker run -d -p 6379:6379 --name redis redis
+
+# DOCKER COMPOSE
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+# CLEAR ALL CONTAINERS
+docker stop $(docker ps -q) 
+docker rm $(docker ps -a -q)
+docker volume rm $(docker volume ls -q)
+docker rmi $(docker images -q)

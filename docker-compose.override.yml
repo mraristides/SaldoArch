@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  saldodb:
+    container_name: saldodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rediscache:
+    container_name: rediscache
+    restart: always
+    ports:
+      - "6379:6379"
+    
+
+  transacaoapi:
+    container_name: transacaoapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - "DatabaseSettings:ConnectionString=mongodb://saldodb:27017"
+     - "RedisSettings:ConnectionString=rediscache:6379"
+    depends_on:
+     - saldodb 
+     - rediscache 
+    ports:
+     - "8000:80"
+
+  saldoapi:
+    container_name: saldoapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - "DatabaseSettings:ConnectionString=mongodb://saldodb:27017"
+     - "RedisSettings:ConnectionString=rediscache:6379"
+    depends_on:
+     - saldodb 
+     - rediscache 
+    ports:
+     - "8081:80"
+
